@@ -1,7 +1,6 @@
 """
 FastAPI backend for the KYC/AML Co-Pilot browser UI.
-Thin layer: receives requests, calls existing agent/tools logic,
-returns results. No business logic lives here.
+
 """
 
 import json
