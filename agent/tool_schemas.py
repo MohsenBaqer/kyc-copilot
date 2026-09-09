@@ -1,7 +1,6 @@
 """
-Tool schemas: descriptions of our four tools, in the format Claude's
-API expects for tool use. Claude reads these to decide which tool to
-call and with what arguments — it never sees our actual Python code.
+Tool schemas: descriptions the pilot tools, in the format Claude's
+API expects for tool use.
 """
 
 TOOLS = [
