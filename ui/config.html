@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rubric Config — Hal SME Co-Pilot</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 640px;
+            margin: 48px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+        a.back { font-size: 13px; color: #666; }
+        h1 { font-size: 20px; margin-bottom: 4px; }
+        .subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+
+        .section {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+        }
+        .section h2 { font-size: 14px; margin: 0 0 12px 0; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 13px;
+        }
+        .row label { color: #444; }
+        .row input {
+            width: 90px;
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        button {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:hover { background: #333; }
+
+        #status { margin-top: 14px; font-size: 13px; }
+        #status.success { color: #1e8449; }
+        #status.error { color: #c0392b; }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">&larr; Back to services</a>
+    <h1>Risk Rubric Configuration</h1>
+    <p class="subtitle">Adjust scoring weights and thresholds for both services. Changes apply immediately to new cases.</p>
+
+    <div id="editor"></div>
+
+    <button onclick="saveConfig()">Save Changes</button>
+    <div id="status"></div>
+
+    <script>
+        let config = {};
+
+        const SECTION_LABELS = {
+            points: "KYC/AML Risk Points",
+            band_thresholds: "KYC/AML Risk Bands (score threshold)",
+            alternative_credit_weights: "Alternative Credit Weights",
+            alternative_credit_band_thresholds: "Alternative Credit Bands (score threshold)",
+        };
+
+        function fieldLabel(key) {
+            return key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        async function loadConfig() {
+            const response = await fetch("/api/config");
+            config = await response.json();
+            renderEditor();
+        }
+
+        function renderEditor() {
+            const editor = document.getElementById("editor");
+            editor.innerHTML = "";
+
+            for (const [sectionKey, label] of Object.entries(SECTION_LABELS)) {
+                if (!(sectionKey in config)) continue;
+
+                const section = document.createElement("div");
+                section.className = "section";
+
+                let rowsHtml = `<h2>${label}</h2>`;
+                for (const [field, value] of Object.entries(config[sectionKey])) {
+                    if (typeof value !== "number") continue;
+                    rowsHtml += `
+                        <div class="row">
+                            <label>${fieldLabel(field)}</label>
+                            <input type="number" data-section="${sectionKey}" data-field="${field}" value="${value}">
+                        </div>
+                    `;
+                }
+                section.innerHTML = rowsHtml;
+                editor.appendChild(section);
+            }
+        }
+
+        function collectEditedConfig() {
+            const inputs = document.querySelectorAll("#editor input");
+            inputs.forEach(input => {
+                const section = input.dataset.section;
+                const field = input.dataset.field;
+                config[section][field] = parseFloat(input.value);
+            });
+            return config;
+        }
+
+        async function saveConfig() {
+            const updated = collectEditedConfig();
+            const statusDiv = document.getElementById("status");
+            statusDiv.textContent = "Saving...";
+            statusDiv.className = "";
+
+            const response = await fetch("/api/config", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ config_json: JSON.stringify(updated) }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                statusDiv.textContent = "Saved — changes now apply to new cases.";
+                statusDiv.className = "success";
+            } else {
+                statusDiv.textContent = "Error: " + data.error;
+                statusDiv.className = "error";
+            }
+        }
+
+        loadConfig();
+    </script>
+</body>
+</html>

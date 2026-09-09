@@ -1,0 +1,18 @@
+{
+  "adverse_media": [
+    {
+      "name": "Karim Al-Rashidi",
+      "headline": "Businessman named in regional fraud investigation",
+      "source": "Gulf Business Weekly",
+      "date": "2025-11-02",
+      "severity": "high"
+    },
+    {
+      "name": "Zayed Trading Co",
+      "headline": "Company fined for customs documentation violations",
+      "source": "Trade Compliance Monitor",
+      "date": "2025-06-14",
+      "severity": "medium"
+    }
+  ]
+}

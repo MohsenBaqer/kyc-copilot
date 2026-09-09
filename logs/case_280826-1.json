@@ -1,0 +1,118 @@
+{
+  "case_id": "280826-1",
+  "started_at": "2026-08-28T17:16:28.026163+00:00",
+  "completed_at": "2026-08-28T17:16:48.634241+00:00",
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool_name": "extract_document",
+      "tool_input": {
+        "file_path": "data/applicant_clean.txt"
+      },
+      "tool_output": {
+        "applicant_name": "Omar Al-Farsi",
+        "date_of_birth": "1985-03-14",
+        "nationality": "UAE",
+        "business_name": "Desert Rose Trading LLC",
+        "business_registration_number": "DXB-2024-88213",
+        "business_address": "Al Quoz Industrial Area, Dubai, UAE",
+        "business_activity": "General trading, import/export",
+        "ownership": "100% - Omar Al-Farsi (sole proprietor)",
+        "source_of_funds": "Personal savings + bank financing",
+        "missing_fields": [],
+        "extraction_complete": true
+      },
+      "timestamp": "2026-08-28T17:16:33.288974+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "screen_sanctions_pep",
+      "tool_input": {
+        "applicant_name": "Omar Al-Farsi",
+        "business_name": "Desert Rose Trading LLC",
+        "date_of_birth": "1985-03-14",
+        "nationality": "UAE"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Omar Al-Farsi",
+          "Desert Rose Trading LLC"
+        ],
+        "sanctions_hit": false,
+        "sanctions_matches": [],
+        "pep_hit": false,
+        "pep_matches": []
+      },
+      "timestamp": "2026-08-28T17:16:37.774170+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "check_adverse_media",
+      "tool_input": {
+        "applicant_name": "Omar Al-Farsi",
+        "business_name": "Desert Rose Trading LLC"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Omar Al-Farsi",
+          "Desert Rose Trading LLC"
+        ],
+        "adverse_media_hit": false,
+        "overall_severity": "none",
+        "hits": []
+      },
+      "timestamp": "2026-08-28T17:16:37.775103+00:00"
+    },
+    {
+      "turn": 3,
+      "tool_name": "calculate_risk_score",
+      "tool_input": {
+        "extraction_result": {
+          "applicant_name": "Omar Al-Farsi",
+          "date_of_birth": "1985-03-14",
+          "nationality": "UAE",
+          "business_name": "Desert Rose Trading LLC",
+          "business_registration_number": "DXB-2024-88213",
+          "business_address": "Al Quoz Industrial Area, Dubai, UAE",
+          "business_activity": "General trading, import/export",
+          "ownership": "100% - Omar Al-Farsi (sole proprietor)",
+          "source_of_funds": "Personal savings + bank financing",
+          "missing_fields": [],
+          "extraction_complete": true
+        },
+        "sanctions_pep_result": {
+          "names_checked": [
+            "Omar Al-Farsi",
+            "Desert Rose Trading LLC"
+          ],
+          "sanctions_hit": false,
+          "sanctions_matches": [],
+          "pep_hit": false,
+          "pep_matches": []
+        },
+        "adverse_media_result": {
+          "names_checked": [
+            "Omar Al-Farsi",
+            "Desert Rose Trading LLC"
+          ],
+          "adverse_media_hit": false,
+          "overall_severity": "none",
+          "hits": []
+        }
+      },
+      "tool_output": {
+        "risk_score": 0,
+        "band": "Low risk \u2014 standard onboarding",
+        "factors": [
+          {
+            "factor": "No red flags identified",
+            "points": 0,
+            "detail": "No sanctions, PEP, or adverse media matches found; documentation complete."
+          }
+        ]
+      },
+      "timestamp": "2026-08-28T17:16:42.068918+00:00"
+    }
+  ],
+  "final_summary": "## KYC/AML Risk Assessment Summary\n\n### **Applicant Information**\n- **Name:** Omar Al-Farsi\n- **Date of Birth:** 1985-03-14\n- **Nationality:** UAE\n- **Business:** Desert Rose Trading LLC\n- **Business Activity:** General trading, import/export\n- **Registration:** DXB-2024-88213\n- **Location:** Al Quoz Industrial Area, Dubai, UAE\n\n---\n\n### **Risk Score: 0**\n### **Risk Band: Low Risk \u2014 Standard Onboarding**\n\n---\n\n### **Key Findings:**\n\n\u2705 **Sanctions Screening:** CLEAR\n   - No matches found for applicant or business against sanctions lists\n\n\u2705 **PEP Screening:** CLEAR\n   - No politically exposed person matches identified\n\n\u2705 **Adverse Media:** CLEAR\n   - No negative news coverage found\n\n\u2705 **Documentation:** COMPLETE\n   - All required fields extracted successfully\n   - Source of funds documented (personal savings + bank financing)\n   - Clear ownership structure (100% sole proprietor)\n\n---\n\n### **Recommendation:**\nThe applicant poses **low risk** and can proceed with standard onboarding procedures. No enhanced due diligence is required at this time. All screening checks returned negative results, and documentation is complete."
+}

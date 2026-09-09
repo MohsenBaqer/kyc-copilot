@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hal SME Co-Pilot</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 680px;
+            margin: 56px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+        h1 { font-size: 22px; margin-bottom: 4px; }
+        .subtitle { color: #666; font-size: 14px; margin-bottom: 36px; }
+
+        .service {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px 22px;
+            margin-bottom: 14px;
+            transition: border-color 0.15s;
+        }
+        .service:hover { border-color: #1a1a1a; }
+
+        .service .pillar {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #666;
+            background: #f2f2f2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .service h2 { font-size: 16px; margin: 0 0 4px 0; }
+        .service p { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
+
+        .footer-link { font-size: 13px; color: #888; margin-top: 24px; display: block; }
+    </style>
+</head>
+<body>
+    <h1>Hal SME Co-Pilot</h1>
+    <p class="subtitle">Agentic tools for SME onboarding and financing.</p>
+
+    <a class="service" href="/kyc">
+        <span class="pillar">Connected Commerce &amp; Trust</span>
+        <h2>Onboard a New Customer</h2>
+        <p>KYC/AML screening for new SME customers — sanctions, PEP, and adverse media checks, with a full explainable audit trail.</p>
+    </a>
+
+    <a class="service" href="/credit">
+        <span class="pillar">Alternative Credit Scoring</span>
+        <h2>Check Financing Readiness</h2>
+        <p>Score an SME's access to finance using bank transaction data as an alternative data source — accelerating credit decisions with fairness and speed.</p>
+    </a>
+
+    <a class="footer-link" href="/dashboard">View all past cases &rarr;</a>
+    <a class="footer-link" href="/config">Adjust scoring rubric &rarr;</a>
+</body>
+</html>

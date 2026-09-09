@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KYC/AML Co-Pilot</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 600px;
+            margin: 48px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+
+        h1 { font-size: 20px; margin-bottom: 4px; }
+        .subtitle { color: #666; font-size: 14px; margin-top: 0; margin-bottom: 24px; }
+
+        #chat {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+            min-height: 120px;
+        }
+
+        .bubble {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            max-width: 85%;
+        }
+
+        .bubble.agent {
+            background: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        .bubble.user {
+            background: #1a1a1a;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .bubble.loading {
+            background: #f0f0f0;
+            color: #888;
+            font-style: italic;
+            align-self: flex-start;
+        }
+
+        #inputRow {
+            display: flex;
+            gap: 8px;
+        }
+
+        #userInput {
+            flex: 1;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+        }
+
+        button {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 0 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover { background: #333; }
+        button:disabled { background: #ccc; cursor: default; }
+    </style>
+</head>
+<body>
+    <a href="/" style="font-size:13px; color:#666;">&larr; Back to services</a>
+    <h1>KYC / AML Intake</h1>
+    <p class="subtitle">Tell me about the applicant and their business, in your own words. I'll let you know if anything's missing.</p>
+
+    <div id="chat">
+        <div class="bubble agent">Hi — go ahead and tell me about the applicant and their business. Include their name, date of birth, nationality, business details, ownership, and source of funds if you can.</div>
+    </div>
+
+    <div id="inputRow">
+        <textarea id="userInput" rows="2" placeholder="Type here..."></textarea>
+        <button id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        let accumulatedText = "";
+        let duplicateAck = "false";
+        let relatedCaseId = "";
+
+        function addBubble(text, cls) {
+            const chat = document.getElementById("chat");
+            const bubble = document.createElement("div");
+            bubble.className = "bubble " + cls;
+            bubble.textContent = text;
+            chat.appendChild(bubble);
+            bubble.scrollIntoView({ behavior: "smooth", block: "end" });
+            return bubble;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById("userInput");
+            const sendBtn = document.getElementById("sendBtn");
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            addBubble(text, "user");
+            accumulatedText += (accumulatedText ? "\n\n" : "") + text;
+            input.value = "";
+            sendBtn.disabled = true;
+
+            const loadingBubble = addBubble("Thinking...", "loading");
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+               body: new URLSearchParams({
+                    accumulated_text: accumulatedText,
+                    duplicate_ack: duplicateAck,
+                    related_case_id: relatedCaseId,
+                }),
+            });
+
+            const data = await response.json();
+            loadingBubble.remove();
+
+            if (data.duplicate_found) {
+                renderDuplicatePrompt(data);
+                return;
+            }
+
+            addBubble(data.message, "agent");
+
+            if (data.complete) {
+                input.disabled = true;
+                sendBtn.disabled = true;
+                sendBtn.textContent = "Assessment complete";
+            } else {
+                sendBtn.disabled = false;
+                if (data.suggestion) {
+                    renderSuggestion(data.suggestion);
+                }
+            }
+        }
+
+        function renderSuggestion(suggestion) {
+            const chat = document.getElementById("chat");
+            const card = document.createElement("div");
+            card.className = "bubble agent";
+
+            let fieldsHtml = "";
+            for (const [field, value] of Object.entries(suggestion.fields)) {
+                fieldsHtml += `<div style="margin-top:4px;"><strong>${field.replace(/_/g, " ")}:</strong> ${value}</div>`;
+            }
+
+            card.innerHTML = `
+                <div>I found this — please confirm before I use it:</div>
+                <div style="font-size:12px; color:#666; margin-top:6px;">${suggestion.found_summary || ""}</div>
+                ${fieldsHtml}
+                <div style="font-size:11px; color:#999; margin-top:6px; font-style:italic;">${suggestion.confidence_note || ""}</div>
+                <div style="margin-top:10px;">
+                    <button onclick='confirmSuggestion(${JSON.stringify(suggestion.fields)})'>Confirm — use this</button>
+                    <button onclick="this.closest('.bubble').remove()" style="background:#999; margin-left:6px;">Ignore</button>
+                </div>
+            `;
+
+            chat.appendChild(card);
+            card.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+
+        function confirmSuggestion(fields) {
+            let confirmedText = "Confirmed additional details: ";
+            const parts = [];
+            for (const [field, value] of Object.entries(fields)) {
+                parts.push(`${field.replace(/_/g, " ")}: ${value}`);
+            }
+            confirmedText += parts.join(", ");
+
+            addBubble(confirmedText, "user");
+            accumulatedText += "\n\n" + confirmedText;
+
+            autoContinue();
+        }
+
+        async function autoContinue() {
+            const loadingBubble = addBubble("Thinking...", "loading");
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams({
+                    accumulated_text: accumulatedText,
+                    duplicate_ack: duplicateAck,
+                    related_case_id: relatedCaseId,
+                }),
+            });
+
+            const data = await response.json();
+            loadingBubble.remove();
+            addBubble(data.message, "agent");
+
+            const sendBtn = document.getElementById("sendBtn");
+            if (data.complete) {
+                document.getElementById("userInput").disabled = true;
+                sendBtn.disabled = true;
+                sendBtn.textContent = "Assessment complete";
+            } else if (data.suggestion) {
+                renderSuggestion(data.suggestion);
+            }
+        }
+
+        document.getElementById("userInput").addEventListener("keydown", function(e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+                function renderDuplicatePrompt(data) {
+            const chat = document.getElementById("chat");
+            const card = document.createElement("div");
+            card.className = "bubble agent";
+
+            const existing = data.existing_cases[0];
+
+            card.innerHTML = `
+                <div>${data.message}</div>
+                <div style="font-size:12px; color:#666; margin-top:6px;">
+                    Case ${existing.case_id} — ${new Date(existing.started_at).toLocaleDateString()}
+                </div>
+                <div style="margin-top:10px;">
+                    <button onclick="resolveDuplicate('update', '${existing.case_id}')">Update details</button>
+                    <button onclick="resolveDuplicate('view', '${existing.case_id}')" style="background:#999; margin-left:6px;">View existing case</button>
+                </div>
+            `;
+
+            chat.appendChild(card);
+            card.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+
+        function resolveDuplicate(choice, caseId) {
+            duplicateAck = "true";
+
+            if (choice === "view") {
+                addBubble(`Opening case ${caseId}...`, "agent");
+                window.open(`/dashboard?case=${caseId}`, "_blank");
+                document.getElementById("sendBtn").disabled = false;
+            } else {
+                relatedCaseId = caseId;
+                addBubble("Updating this record — go ahead and share what's changed.", "agent");
+                document.getElementById("sendBtn").disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

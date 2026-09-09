@@ -1,0 +1,22 @@
+date,description,amount,type
+2026-03-01,Customer payment - Marina Foods,26000,credit
+2026-03-04,Supplier payment,-9800,debit
+2026-03-07,Rent,-10500,debit
+2026-03-12,Customer payment - Marina Foods,24500,credit
+2026-03-16,Payroll,-16000,debit
+2026-03-21,Customer payment - Coastal Traders,12000,credit
+2026-03-26,Utilities,-2100,debit
+2026-04-02,Customer payment - Marina Foods,27500,credit
+2026-04-05,Supplier payment,-10200,debit
+2026-04-08,Rent,-10500,debit
+2026-04-13,Customer payment - Marina Foods,15000,credit
+2026-04-17,Payroll,-16000,debit
+2026-04-23,Customer payment - Coastal Traders,9500,credit
+2026-04-28,Utilities,-2050,debit
+2026-05-02,Customer payment - Marina Foods,29000,credit
+2026-05-05,Supplier payment,-10500,debit
+2026-05-08,Rent,-10500,debit
+2026-05-14,Customer payment - Marina Foods,13500,credit
+2026-05-18,Payroll,-16500,debit
+2026-05-24,Customer payment - Coastal Traders,11000,credit
+2026-05-29,Utilities,-2100,debit

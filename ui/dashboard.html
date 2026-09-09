@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Case Dashboard — KYC/AML Co-Pilot</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 800px;
+            margin: 48px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+        h1 { font-size: 20px; margin-bottom: 4px; }
+        .subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+        a.back { font-size: 13px; color: #666; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { text-align: left; padding: 10px 12px; font-size: 13px; border-bottom: 1px solid #eee; }
+        th { color: #888; font-weight: 500; }
+        tr:hover { background: #fafafa; cursor: pointer; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge.high { background: #fde8e8; color: #c0392b; }
+        .badge.medium { background: #fff4e0; color: #b8720a; }
+        .badge.low { background: #e6f7ea; color: #1e8449; }
+        .badge.unknown { background: #eee; color: #888; }
+
+          #detail { display: none; margin-top: 24px; }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 16px;
+        }
+        .detail-header h2 { font-size: 16px; margin: 0; }
+        .detail-header .meta { font-size: 12px; color: #888; }
+
+        .tool-call {
+            background: #fff;
+            border: 1px solid #eee;
+            border-left: 3px solid #1a1a1a;
+            border-radius: 6px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .tool-call .tool-name {
+            font-weight: 600;
+            font-family: ui-monospace, monospace;
+            font-size: 12.5px;
+        }
+        .tool-call .tool-time { color: #999; font-size: 11px; float: right; }
+        .tool-call pre {
+            background: #f7f7f7;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11.5px;
+            overflow-x: auto;
+            margin: 6px 0 0 0;
+        }
+        .tool-call .label { color: #888; font-size: 11px; margin-top: 8px; }
+
+        .summary-block {
+            background: #f7f7f7;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-top: 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .summary-block strong { color: #111; }
+        
+    </style>
+</head>
+<body>
+    <a class="back" href="/">&larr; Back to intake</a>
+    <h1>Case Dashboard</h1>
+    <p class="subtitle">All KYC/AML cases run so far.</p>
+
+    <table id="caseTable">
+        <thead>
+            <tr><th>Case ID</th><th>Started</th><th>Risk Band</th></tr>
+        </thead>
+        <tbody id="caseTableBody"></tbody>
+    </table>
+
+    <div id="detail"></div>
+
+    <script>
+        function extractBand(summary) {
+            const match = summary.match(/Risk Band:?\**\s*([^\n]+)/i);
+            return match ? match[1].replace(/\*/g, "").trim() : "Unknown";
+        }
+
+        function bandClass(band) {
+            const lower = band.toLowerCase();
+            if (lower.includes("high")) return "high";
+            if (lower.includes("medium")) return "medium";
+            if (lower.includes("low")) return "low";
+            return "unknown";
+        }
+
+        async function loadCases() {
+            const response = await fetch("/api/cases");
+            const data = await response.json();
+            const tbody = document.getElementById("caseTableBody");
+
+            data.cases.forEach(c => {
+                const band = extractBand(c.final_summary || "");
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${c.case_id}</td>
+                    <td>${new Date(c.started_at).toLocaleString()}</td>
+                    <td><span class="badge ${bandClass(band)}">${band}</span></td>
+                `;
+                row.onclick = () => openCase(c.case_id);
+                tbody.appendChild(row);
+            });
+        }
+
+             function formatSummary(text) {
+            // Minimal markdown-ish rendering: bold + headers, safely escaped first
+            const escaped = text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+            return escaped
+                .replace(/^### (.*)$/gm, "<strong>$1</strong>")
+                .replace(/^## (.*)$/gm, "<strong style='font-size:14px;'>$1</strong>")
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        }
+
+        async function openCase(caseId) {
+            const response = await fetch(`/api/cases/${caseId}`);
+            const data = await response.json();
+            const detail = document.getElementById("detail");
+            detail.style.display = "block";
+
+            let toolCallsHtml = "";
+            (data.tool_calls || []).forEach(call => {
+                toolCallsHtml += `
+                    <div class="tool-call">
+                        <span class="tool-name">${call.tool_name}</span>
+                        <span class="tool-time">${new Date(call.timestamp).toLocaleTimeString()}</span>
+                        <div class="label">Input</div>
+                        <pre>${JSON.stringify(call.tool_input, null, 2)}</pre>
+                        <div class="label">Output</div>
+                        <pre>${JSON.stringify(call.tool_output, null, 2)}</pre>
+                    </div>
+                `;
+            });
+
+            detail.innerHTML = `
+                <div class="detail-header">
+                    <h2>Case ${data.case_id}</h2>
+                    <span class="meta">
+                        Started ${new Date(data.started_at).toLocaleString()}
+                        ${data.completed_at ? " · Completed " + new Date(data.completed_at).toLocaleString() : ""}
+                    </span>
+                </div>
+                <div class="label" style="margin-bottom:6px;">Tool call trail</div>
+                ${toolCallsHtml || "<p style='color:#999; font-size:13px;'>No tool calls recorded.</p>"}
+                <div class="label" style="margin-top:16px;">Final summary</div>
+                <div class="summary-block">${formatSummary(data.final_summary || "")}</div>
+            `;
+
+            detail.scrollIntoView({ behavior: "smooth" });
+        
+        }
+
+        loadCases().then(() => {
+            const params = new URLSearchParams(window.location.search);
+            const caseId = params.get("case");
+            if (caseId) openCase(caseId);
+        });
+        </script>
+</body>
+</html>

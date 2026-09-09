@@ -1,0 +1,119 @@
+{
+  "case_id": "020926-7",
+  "started_at": "2026-09-02T13:36:55.864254+00:00",
+  "completed_at": "2026-09-02T13:37:28.639493+00:00",
+  "related_case_id": null,
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool_name": "extract_document",
+      "tool_input": {
+        "file_path": "data/uploads/chat_intake.txt"
+      },
+      "tool_output": {
+        "applicant_name": "Yousef Al-Balushi",
+        "date_of_birth": "March 1990",
+        "nationality": "UAE",
+        "business_name": "Balushi Fresh Produce Trading",
+        "business_registration_number": "DXB-2025-10298",
+        "business_address": "Al Quoz, industrial area 3, Dubai",
+        "business_activity": "import fruits and vegetables, mostly from Egypt and Jordan, and distribute to supermarkets",
+        "ownership": "sole owner, no partners",
+        "source_of_funds": "selling previous business plus personal savings",
+        "missing_fields": [],
+        "extraction_complete": true
+      },
+      "timestamp": "2026-09-02T13:37:01.928161+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "screen_sanctions_pep",
+      "tool_input": {
+        "applicant_name": "Yousef Al-Balushi",
+        "business_name": "Balushi Fresh Produce Trading",
+        "date_of_birth": "March 1990",
+        "nationality": "UAE"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Yousef Al-Balushi",
+          "Balushi Fresh Produce Trading"
+        ],
+        "sanctions_hit": false,
+        "sanctions_matches": [],
+        "pep_hit": false,
+        "pep_matches": []
+      },
+      "timestamp": "2026-09-02T13:37:11.357186+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "check_adverse_media",
+      "tool_input": {
+        "applicant_name": "Yousef Al-Balushi",
+        "business_name": "Balushi Fresh Produce Trading"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Yousef Al-Balushi",
+          "Balushi Fresh Produce Trading"
+        ],
+        "adverse_media_hit": false,
+        "overall_severity": "none",
+        "hits": []
+      },
+      "timestamp": "2026-09-02T13:37:12.430803+00:00"
+    },
+    {
+      "turn": 3,
+      "tool_name": "calculate_risk_score",
+      "tool_input": {
+        "extraction_result": {
+          "applicant_name": "Yousef Al-Balushi",
+          "date_of_birth": "March 1990",
+          "nationality": "UAE",
+          "business_name": "Balushi Fresh Produce Trading",
+          "business_registration_number": "DXB-2025-10298",
+          "business_address": "Al Quoz, industrial area 3, Dubai",
+          "business_activity": "import fruits and vegetables, mostly from Egypt and Jordan, and distribute to supermarkets",
+          "ownership": "sole owner, no partners",
+          "source_of_funds": "selling previous business plus personal savings",
+          "missing_fields": [],
+          "extraction_complete": true
+        },
+        "sanctions_pep_result": {
+          "names_checked": [
+            "Yousef Al-Balushi",
+            "Balushi Fresh Produce Trading"
+          ],
+          "sanctions_hit": false,
+          "sanctions_matches": [],
+          "pep_hit": false,
+          "pep_matches": []
+        },
+        "adverse_media_result": {
+          "names_checked": [
+            "Yousef Al-Balushi",
+            "Balushi Fresh Produce Trading"
+          ],
+          "adverse_media_hit": false,
+          "overall_severity": "none",
+          "hits": []
+        }
+      },
+      "tool_output": {
+        "risk_score": 0,
+        "band": "Low risk \u2014 standard onboarding",
+        "factors": [
+          {
+            "factor": "No red flags identified",
+            "points": 0,
+            "detail": "No sanctions, PEP, or adverse media matches found; documentation complete."
+          }
+        ]
+      },
+      "timestamp": "2026-09-02T13:37:21.193265+00:00"
+    }
+  ],
+  "final_summary": "## KYC/AML Risk Assessment Summary\n\n**Applicant:** Yousef Al-Balushi  \n**Business:** Balushi Fresh Produce Trading  \n**Registration:** DXB-2025-10298\n\n---\n\n### **Final Risk Score: 0**\n**Risk Band:** Low risk \u2014 standard onboarding\n\n---\n\n### **Key Findings:**\n\n\u2705 **Sanctions Screening:** CLEAR  \n- No matches found on sanctions lists for the applicant or business\n\n\u2705 **PEP Screening:** CLEAR  \n- No Politically Exposed Person matches identified\n\n\u2705 **Adverse Media:** CLEAR  \n- No negative news coverage detected related to fraud, criminal activity, or regulatory action\n\n\u2705 **Documentation:** COMPLETE  \n- All required identity and business fields successfully extracted\n- Business Activity: Import and distribution of fruits/vegetables from Egypt and Jordan to UAE supermarkets\n- Ownership: Sole proprietor\n- Source of Funds: Sale of previous business plus personal savings\n\n---\n\n### **Recommendation:**\nThis applicant presents **low risk** for KYC/AML purposes. Standard onboarding procedures can proceed without enhanced due diligence requirements. No red flags were identified across sanctions, PEP, or adverse media screening."
+}

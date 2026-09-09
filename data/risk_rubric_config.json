@@ -1,0 +1,38 @@
+{
+  "points": {
+    "sanctions_hit": 10,
+    "pep_hit": 25,
+    "adverse_media_high": 30,
+    "adverse_media_medium": 15,
+    "adverse_media_low": 5,
+    "incomplete_documentation": 10,
+    "high_risk_sector": 15,
+    "newly_established_business": 10,
+    "free_zone_entity": 5
+  },
+  "band_thresholds": {
+    "high_risk_min": 50,
+    "medium_risk_min": 20
+  },
+  "band_labels": {
+    "high": "High risk \u2014 escalate for manual review, do not auto-approve",
+    "medium": "Medium risk \u2014 enhanced due diligence required",
+    "low": "Low risk \u2014 standard onboarding"
+  },
+  "alternative_credit_weights": {
+    "cash_flow_stability": 30,
+    "revenue_consistency": 25,
+    "data_completeness": 20,
+    "customer_concentration": 15,
+    "overdraft_distress": 10
+  },
+  "alternative_credit_band_thresholds": {
+    "ready_min": 75,
+    "conditional_min": 50
+  },
+  "alternative_credit_band_labels": {
+    "ready": "Ready for financing \u2014 strong alternative credit profile",
+    "conditional": "Conditional \u2014 improve profile before applying",
+    "not_ready": "Not yet ready \u2014 significant gaps to address"
+  }
+}

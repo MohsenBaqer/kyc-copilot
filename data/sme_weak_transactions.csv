@@ -1,0 +1,18 @@
+date,description,amount,type
+2026-03-02,Customer payment - Gulf Fresh Mart,18000,credit
+2026-03-06,Rent,-9500,debit
+2026-03-09,Supplier payment,-11000,debit
+2026-03-15,Payroll,-14000,debit
+2026-03-22,Customer payment - Gulf Fresh Mart,9500,credit
+2026-03-29,Overdraft fee,-350,debit
+2026-04-01,Customer payment - Gulf Fresh Mart,21000,credit
+2026-04-06,Rent,-9500,debit
+2026-04-10,Supplier payment,-13500,debit
+2026-04-15,Payroll,-14000,debit
+2026-04-20,Customer payment - Gulf Fresh Mart,6200,credit
+2026-04-27,Overdraft fee,-420,debit
+2026-05-02,Customer payment - Gulf Fresh Mart,15800,credit
+2026-05-06,Rent,-9500,debit
+2026-05-11,Supplier payment,-12800,debit
+2026-05-15,Payroll,-14000,debit
+2026-05-24,Overdraft fee,-380,debit

@@ -1,0 +1,115 @@
+{
+  "case_id": "080926-4",
+  "started_at": "2026-09-08T09:25:04.696600+00:00",
+  "completed_at": "2026-09-08T09:25:17.761143+00:00",
+  "related_case_id": null,
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool_name": "extract_transactions",
+      "tool_input": {
+        "csv_path": "data/sme_strong_transactions.csv"
+      },
+      "tool_output": {
+        "months_covered": 4,
+        "monthly_revenue": {
+          "2026-02": 153500.0,
+          "2026-03": 161500.0,
+          "2026-04": 160700.0,
+          "2026-05": 164700.0
+        },
+        "monthly_expenses": {
+          "2026-02": 50400.0,
+          "2026-03": 51600.0,
+          "2026-04": 51150.0,
+          "2026-05": 52000.0
+        },
+        "monthly_net": {
+          "2026-02": 103100.0,
+          "2026-03": 109900.0,
+          "2026-04": 109550.0,
+          "2026-05": 112700.0
+        },
+        "avg_monthly_revenue": 160100.0,
+        "revenue_volatility": 0.03,
+        "top_customer_pct": 0.561,
+        "num_distinct_customers": 3,
+        "overdraft_events": 0,
+        "data_quality_flags": []
+      },
+      "timestamp": "2026-09-08T09:25:06.946998+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "score_alternative_credit",
+      "tool_input": {
+        "metrics": {
+          "months_covered": 4,
+          "monthly_revenue": {
+            "2026-02": 153500.0,
+            "2026-03": 161500.0,
+            "2026-04": 160700.0,
+            "2026-05": 164700.0
+          },
+          "monthly_expenses": {
+            "2026-02": 50400.0,
+            "2026-03": 51600.0,
+            "2026-04": 51150.0,
+            "2026-05": 52000.0
+          },
+          "monthly_net": {
+            "2026-02": 103100.0,
+            "2026-03": 109900.0,
+            "2026-04": 109550.0,
+            "2026-05": 112700.0
+          },
+          "avg_monthly_revenue": 160100.0,
+          "revenue_volatility": 0.03,
+          "top_customer_pct": 0.561,
+          "num_distinct_customers": 3,
+          "overdraft_events": 0,
+          "data_quality_flags": []
+        }
+      },
+      "tool_output": {
+        "overall_score": 86.0,
+        "band": "Ready for financing \u2014 strong alternative credit profile",
+        "breakdown": {
+          "cash_flow_stability": {
+            "raw_score": 1.0,
+            "weight": 30,
+            "weighted_points": 30.0,
+            "reason": "Positive net cash flow in every month provided."
+          },
+          "revenue_consistency": {
+            "raw_score": 1.0,
+            "weight": 25,
+            "weighted_points": 25.0,
+            "reason": "Low revenue volatility (3.0%) \u2014 stable, predictable income."
+          },
+          "data_completeness": {
+            "raw_score": 0.6,
+            "weight": 20,
+            "weighted_points": 12.0,
+            "reason": "4 months of transaction history \u2014 usable but below the 6-month ideal."
+          },
+          "customer_concentration": {
+            "raw_score": 0.6,
+            "weight": 15,
+            "weighted_points": 9.0,
+            "reason": "Top customer accounts for 56% of revenue \u2014 moderate concentration."
+          },
+          "overdraft_distress": {
+            "raw_score": 1.0,
+            "weight": 10,
+            "weighted_points": 10.0,
+            "reason": "No overdraft events detected."
+          }
+        },
+        "data_quality_flags": []
+      },
+      "timestamp": "2026-09-08T09:25:10.676469+00:00"
+    }
+  ],
+  "final_summary": "## Alternative Credit Readiness Assessment - Final Summary\n\n**Overall Score: 86/100**  \n**Band: Ready for financing \u2014 strong alternative credit profile**\n\n### Key Findings:\n\n**Strengths:**\n- **Excellent Cash Flow Stability (30/30 points)**: Positive net cash flow in all 4 months analyzed, with strong monthly profits ranging from $103k to $113k\n- **Outstanding Revenue Consistency (25/25 points)**: Very low revenue volatility at just 3%, demonstrating highly predictable income\n- **No Financial Distress (10/10 points)**: Zero overdraft events detected, indicating sound cash management\n- **Strong Financial Performance**: Average monthly revenue of $160,100 with consistent growth trajectory\n\n**Areas for Improvement:**\n- **Data Completeness (12/20 points)**: Only 4 months of transaction history provided; 6+ months would strengthen the assessment\n- **Customer Concentration (9/15 points)**: Top customer represents 56% of revenue, creating moderate dependency risk with only 3 distinct customers total\n\n### Bottom Line:\nThis business demonstrates a strong alternative credit profile with excellent cash flow management, stable revenue, and no signs of financial distress. The primary considerations are the limited transaction history and customer concentration. This applicant is **well-positioned for financing**, particularly for credit products aligned with their monthly revenue of ~$160k."
+}

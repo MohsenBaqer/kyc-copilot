@@ -1,0 +1,37 @@
+date,description,amount,type
+2026-02-03,Customer payment - Al Fahim Trading,45000,credit
+2026-02-05,Supplier payment - packaging co,-8200,debit
+2026-02-07,Rent,-12000,debit
+2026-02-10,Customer payment - Noor Retail Group,38000,credit
+2026-02-14,Payroll,-22000,debit
+2026-02-18,Customer payment - Al Fahim Trading,41000,credit
+2026-02-20,Utilities,-1800,debit
+2026-02-25,Customer payment - Desert Rose LLC,29500,credit
+2026-02-28,Supplier payment - logistics,-6400,debit
+2026-03-03,Customer payment - Al Fahim Trading,47000,credit
+2026-03-05,Supplier payment - packaging co,-8600,debit
+2026-03-07,Rent,-12000,debit
+2026-03-10,Customer payment - Noor Retail Group,40000,credit
+2026-03-14,Payroll,-22500,debit
+2026-03-18,Customer payment - Al Fahim Trading,43500,credit
+2026-03-20,Utilities,-1900,debit
+2026-03-25,Customer payment - Desert Rose LLC,31000,credit
+2026-03-28,Supplier payment - logistics,-6600,debit
+2026-04-03,Customer payment - Al Fahim Trading,46200,credit
+2026-04-05,Supplier payment - packaging co,-8300,debit
+2026-04-07,Rent,-12000,debit
+2026-04-10,Customer payment - Noor Retail Group,39500,credit
+2026-04-14,Payroll,-22500,debit
+2026-04-18,Customer payment - Al Fahim Trading,44800,credit
+2026-04-20,Utilities,-1850,debit
+2026-04-25,Customer payment - Desert Rose LLC,30200,credit
+2026-04-28,Supplier payment - logistics,-6500,debit
+2026-05-03,Customer payment - Al Fahim Trading,45500,credit
+2026-05-05,Supplier payment - packaging co,-8400,debit
+2026-05-07,Rent,-12000,debit
+2026-05-10,Customer payment - Noor Retail Group,41200,credit
+2026-05-14,Payroll,-23000,debit
+2026-05-18,Customer payment - Al Fahim Trading,46000,credit
+2026-05-20,Utilities,-1900,debit
+2026-05-25,Customer payment - Desert Rose LLC,32000,credit
+2026-05-28,Supplier payment - logistics,-6700,debit

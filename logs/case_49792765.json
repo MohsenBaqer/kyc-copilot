@@ -1,0 +1,134 @@
+{
+  "case_id": "49792765",
+  "started_at": "2026-08-28T17:12:53.892220+00:00",
+  "completed_at": "2026-08-28T17:13:18.940440+00:00",
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool_name": "extract_document",
+      "tool_input": {
+        "file_path": "data/applicant_sanctions_hit.txt"
+      },
+      "tool_output": {
+        "applicant_name": "Karim Al-Rashidi",
+        "date_of_birth": "1972-01-08",
+        "nationality": "UAE",
+        "business_name": "Al-Rashidi Import Export FZE",
+        "business_registration_number": "DXB-2024-77332",
+        "business_address": "Jebel Ali Free Zone, Dubai, UAE",
+        "business_activity": "Import/export, general trading",
+        "ownership": "100% - Karim Al-Rashidi (sole proprietor)",
+        "source_of_funds": "Business revenue",
+        "missing_fields": [],
+        "extraction_complete": true
+      },
+      "timestamp": "2026-08-28T17:12:58.765103+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "screen_sanctions_pep",
+      "tool_input": {
+        "applicant_name": "Karim Al-Rashidi",
+        "business_name": "Al-Rashidi Import Export FZE",
+        "date_of_birth": "1972-01-08",
+        "nationality": "UAE"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Karim Al-Rashidi",
+          "Al-Rashidi Import Export FZE"
+        ],
+        "sanctions_hit": false,
+        "sanctions_matches": [],
+        "pep_hit": false,
+        "pep_matches": []
+      },
+      "timestamp": "2026-08-28T17:13:03.271165+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "check_adverse_media",
+      "tool_input": {
+        "applicant_name": "Karim Al-Rashidi",
+        "business_name": "Al-Rashidi Import Export FZE"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Karim Al-Rashidi",
+          "Al-Rashidi Import Export FZE"
+        ],
+        "adverse_media_hit": true,
+        "overall_severity": "high",
+        "hits": [
+          {
+            "name": "Karim Al-Rashidi",
+            "headline": "Businessman named in regional fraud investigation",
+            "source": "Gulf Business Weekly",
+            "date": "2025-11-02",
+            "severity": "high"
+          }
+        ]
+      },
+      "timestamp": "2026-08-28T17:13:03.272184+00:00"
+    },
+    {
+      "turn": 3,
+      "tool_name": "calculate_risk_score",
+      "tool_input": {
+        "extraction_result": {
+          "applicant_name": "Karim Al-Rashidi",
+          "date_of_birth": "1972-01-08",
+          "nationality": "UAE",
+          "business_name": "Al-Rashidi Import Export FZE",
+          "business_registration_number": "DXB-2024-77332",
+          "business_address": "Jebel Ali Free Zone, Dubai, UAE",
+          "business_activity": "Import/export, general trading",
+          "ownership": "100% - Karim Al-Rashidi (sole proprietor)",
+          "source_of_funds": "Business revenue",
+          "missing_fields": [],
+          "extraction_complete": true
+        },
+        "sanctions_pep_result": {
+          "names_checked": [
+            "Karim Al-Rashidi",
+            "Al-Rashidi Import Export FZE"
+          ],
+          "sanctions_hit": false,
+          "sanctions_matches": [],
+          "pep_hit": false,
+          "pep_matches": []
+        },
+        "adverse_media_result": {
+          "names_checked": [
+            "Karim Al-Rashidi",
+            "Al-Rashidi Import Export FZE"
+          ],
+          "adverse_media_hit": true,
+          "overall_severity": "high",
+          "hits": [
+            {
+              "name": "Karim Al-Rashidi",
+              "headline": "Businessman named in regional fraud investigation",
+              "source": "Gulf Business Weekly",
+              "date": "2025-11-02",
+              "severity": "high"
+            }
+          ]
+        }
+      },
+      "tool_output": {
+        "risk_score": 30,
+        "band": "Medium risk \u2014 enhanced due diligence required",
+        "factors": [
+          {
+            "factor": "Adverse media",
+            "points": 30,
+            "detail": "Adverse media found with 'high' severity."
+          }
+        ]
+      },
+      "timestamp": "2026-08-28T17:13:09.002737+00:00"
+    }
+  ],
+  "final_summary": "## KYC/AML Risk Assessment Summary\n\n**Applicant:** Karim Al-Rashidi  \n**Business:** Al-Rashidi Import Export FZE  \n**Date of Assessment:** Current\n\n---\n\n### **Final Risk Score: 30**\n### **Risk Band: Medium Risk \u2014 Enhanced Due Diligence Required**\n\n---\n\n### **Key Findings:**\n\n1. **Adverse Media Hit (HIGH SEVERITY)** \u26a0\ufe0f\n   - **Finding:** The applicant was named in a regional fraud investigation\n   - **Source:** Gulf Business Weekly (November 2, 2025)\n   - **Impact:** +30 risk points\n   - **Status:** This is a significant red flag requiring immediate investigation\n\n2. **Sanctions Screening:** \u2713 CLEAR\n   - No matches found on sanctions lists\n\n3. **PEP Screening:** \u2713 CLEAR\n   - No politically exposed person matches found\n\n4. **Business Profile:**\n   - Industry: Import/export, general trading\n   - Location: Jebel Ali Free Zone, Dubai, UAE\n   - Structure: Sole proprietorship (100% owned by applicant)\n\n---\n\n### **Recommended Actions:**\n\n1. **Enhanced Due Diligence (EDD) Required** - Do not proceed with onboarding until:\n   - Details of the fraud investigation are obtained and verified\n   - Legal status and outcome of investigation is confirmed\n   - Additional documentation regarding business operations is reviewed\n   - Senior management approval is obtained\n\n2. **Further Investigation** - Request from the applicant:\n   - Written explanation of the fraud investigation\n   - Court documents or official statements\n   - Additional references and background checks\n\n3. **Ongoing Monitoring** - If approved after EDD, implement continuous adverse media monitoring\n\n**Assessment Status:** \u26a0\ufe0f REQUIRES ESCALATION - Do not approve without enhanced review"
+}

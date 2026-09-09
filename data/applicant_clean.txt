@@ -1,0 +1,11 @@
+BUSINESS REGISTRATION APPLICATION - KYC INTAKE FORM
+
+Applicant Name: Omar Al-Farsi
+Date of Birth: 1985-03-14
+Nationality: UAE
+Business Name: Desert Rose Trading LLC
+Business Registration Number: DXB-2024-88213
+Business Address: Al Quoz Industrial Area, Dubai, UAE
+Business Activity: General trading, import/export
+Ownership: 100% - Omar Al-Farsi (sole proprietor)
+Source of Funds: Personal savings + bank financing

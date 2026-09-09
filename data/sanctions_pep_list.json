@@ -1,0 +1,12 @@
+{
+  "sanctions_list": [
+    {"name": "Karim Al-Rashidi", "list": "OFAC SDN", "reason": "Asset freeze - designated entity"},
+    {"name": "Viktor Petrenko", "list": "UN Consolidated List", "reason": "Sanctions - regional conflict"},
+    {"name": "Global Trade Consolidated FZE", "list": "OFAC SDN", "reason": "Front company designation"}
+  ],
+  "pep_list": [
+    {"name": "Ahmed Al-Mansouri", "role": "Former Minister of Trade", "country": "UAE", "status": "PEP - close family member"},
+    {"name": "Fatima Al-Nuaimi", "role": "Sitting Member of Parliament", "country": "UAE", "status": "PEP - direct"},
+    {"name": "Rashid Al-Ketbi", "role": "State-owned enterprise CEO", "country": "UAE", "status": "PEP - direct"}
+  ]
+}

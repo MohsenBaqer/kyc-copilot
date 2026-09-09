@@ -1,0 +1,119 @@
+{
+  "case_id": "020926-5",
+  "started_at": "2026-09-02T12:52:48.778529+00:00",
+  "completed_at": "2026-09-02T12:53:10.439727+00:00",
+  "related_case_id": null,
+  "tool_calls": [
+    {
+      "turn": 1,
+      "tool_name": "extract_document",
+      "tool_input": {
+        "file_path": "data/applicant_pep.txt"
+      },
+      "tool_output": {
+        "applicant_name": "Fatima Al-Nuaimi",
+        "date_of_birth": "1978-09-22",
+        "nationality": "UAE",
+        "business_name": "Al-Nuaimi Consulting Group",
+        "business_registration_number": "DXB-2024-91045",
+        "business_address": "Business Bay, Dubai, UAE",
+        "business_activity": "Management consulting",
+        "ownership": "100% - Fatima Al-Nuaimi (sole proprietor)",
+        "source_of_funds": "Professional income",
+        "missing_fields": [],
+        "extraction_complete": true
+      },
+      "timestamp": "2026-09-02T12:52:54.020461+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "screen_sanctions_pep",
+      "tool_input": {
+        "applicant_name": "Fatima Al-Nuaimi",
+        "business_name": "Al-Nuaimi Consulting Group",
+        "date_of_birth": "1978-09-22",
+        "nationality": "UAE"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Fatima Al-Nuaimi",
+          "Al-Nuaimi Consulting Group"
+        ],
+        "sanctions_hit": false,
+        "sanctions_matches": [],
+        "pep_hit": false,
+        "pep_matches": []
+      },
+      "timestamp": "2026-09-02T12:52:58.340276+00:00"
+    },
+    {
+      "turn": 2,
+      "tool_name": "check_adverse_media",
+      "tool_input": {
+        "applicant_name": "Fatima Al-Nuaimi",
+        "business_name": "Al-Nuaimi Consulting Group"
+      },
+      "tool_output": {
+        "names_checked": [
+          "Fatima Al-Nuaimi",
+          "Al-Nuaimi Consulting Group"
+        ],
+        "adverse_media_hit": false,
+        "overall_severity": "none",
+        "hits": []
+      },
+      "timestamp": "2026-09-02T12:52:59.274363+00:00"
+    },
+    {
+      "turn": 3,
+      "tool_name": "calculate_risk_score",
+      "tool_input": {
+        "extraction_result": {
+          "applicant_name": "Fatima Al-Nuaimi",
+          "date_of_birth": "1978-09-22",
+          "nationality": "UAE",
+          "business_name": "Al-Nuaimi Consulting Group",
+          "business_registration_number": "DXB-2024-91045",
+          "business_address": "Business Bay, Dubai, UAE",
+          "business_activity": "Management consulting",
+          "ownership": "100% - Fatima Al-Nuaimi (sole proprietor)",
+          "source_of_funds": "Professional income",
+          "missing_fields": [],
+          "extraction_complete": true
+        },
+        "sanctions_pep_result": {
+          "names_checked": [
+            "Fatima Al-Nuaimi",
+            "Al-Nuaimi Consulting Group"
+          ],
+          "sanctions_hit": false,
+          "sanctions_matches": [],
+          "pep_hit": false,
+          "pep_matches": []
+        },
+        "adverse_media_result": {
+          "names_checked": [
+            "Fatima Al-Nuaimi",
+            "Al-Nuaimi Consulting Group"
+          ],
+          "adverse_media_hit": false,
+          "overall_severity": "none",
+          "hits": []
+        }
+      },
+      "tool_output": {
+        "risk_score": 0,
+        "band": "Low risk \u2014 standard onboarding",
+        "factors": [
+          {
+            "factor": "No red flags identified",
+            "points": 0,
+            "detail": "No sanctions, PEP, or adverse media matches found; documentation complete."
+          }
+        ]
+      },
+      "timestamp": "2026-09-02T12:53:04.419508+00:00"
+    }
+  ],
+  "final_summary": "## KYC/AML Risk Assessment Summary\n\n**Applicant:** Fatima Al-Nuaimi  \n**Business:** Al-Nuaimi Consulting Group  \n**Date of Birth:** 1978-09-22  \n**Nationality:** UAE\n\n---\n\n### Final Risk Assessment\n\n**Risk Score:** 0  \n**Risk Band:** **Low risk \u2014 standard onboarding**\n\n---\n\n### Key Findings:\n\n\u2705 **Sanctions Screening:** CLEAR - No matches found  \n\u2705 **PEP Screening:** CLEAR - No politically exposed person matches  \n\u2705 **Adverse Media:** CLEAR - No negative news coverage detected  \n\u2705 **Documentation:** Complete - All required fields extracted successfully\n\n---\n\n### Business Details:\n- **Registration Number:** DXB-2024-91045\n- **Business Activity:** Management consulting\n- **Location:** Business Bay, Dubai, UAE\n- **Ownership:** 100% sole proprietor (Fatima Al-Nuaimi)\n- **Source of Funds:** Professional income\n\n---\n\n### Recommendation:\nThis applicant presents a **low-risk profile** with no compliance concerns identified. The application can proceed through standard onboarding procedures without enhanced due diligence requirements."
+}
