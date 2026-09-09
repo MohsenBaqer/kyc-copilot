@@ -3,9 +3,7 @@ Tool: lookup_public_info
 
 Purpose: Given a name (person or company), searches the web for
 publicly available identifying details and returns them as a
-SUGGESTION — never authoritative. The calling UI must present these
-to a human for explicit confirmation before they're used anywhere
-in the KYC pipeline. This tool never feeds directly into scoring.
+SUGGESTION.
 """
 
 import json
