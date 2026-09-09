@@ -4,11 +4,6 @@ Tool: extract_document
 Purpose: Turns a raw KYC intake document (any freeform text) into
 structured fields the rest of the pipeline can use. Uses Claude to
 handle arbitrary formatting/wording rather than rigid regex matching.
-
-Design principle: still does no risk judgment — only extraction.
-If a field genuinely isn't present in the text, it's reported as
-missing rather than guessed — enforced via explicit instruction to
-the model plus structured JSON output.
 """
 
 import json
