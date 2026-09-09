@@ -20,4 +20,4 @@ Both services share one underlying agent architecture, one audit logging system,
 
 ## Tech stack
 
-Python · FastAPI · Anthropic Claude API · OpenSanctions API · NewsAPI.org · pandas · vanilla HTML/JS
+Python · FastAPI · Anthropic Claude API · OpenSanctions API · NewsAPI.org · pandas ·  HTML/JS
