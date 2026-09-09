@@ -1,5 +1,5 @@
 """
-Tool schemas: descriptions the pilot tools, in the format Claude's
+Tool schemas: descriptions of the pilot tools, in the format Claude's
 API expects for tool use.
 """
 
