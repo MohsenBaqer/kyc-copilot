@@ -2,9 +2,7 @@
 Tool: extract_transactions
 
 Purpose: Parses raw bank transaction CSVs into structured financial
-metrics for alternative credit scoring — using transaction history
-as an alternative data source in place of traditional credit bureau
-history. Does no judgment — only extraction.
+metrics for alternative credit scoring.
 """
 
 import pandas as pd
