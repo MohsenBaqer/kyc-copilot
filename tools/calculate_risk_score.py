@@ -1,15 +1,8 @@
 """
 Tool: calculate_risk_score
-
-Purpose: Combines extraction, sanctions/PEP screening, and adverse
+Combines extraction, sanctions/PEP screening, and adverse
 media results into one deterministic risk score, with a reason
-attached to every contributing factor. NO LLM — must be reproducible
-and explainable to a compliance reviewer or auditor.
-
-Risk-additive model: start at 0, add points per red flag found.
-A single severe hit (sanctions) can dominate the score rather than
-being averaged away by otherwise clean factors — deliberate choice
-for a compliance context.
+attached to every contributing factor.
 """
 
 import json
