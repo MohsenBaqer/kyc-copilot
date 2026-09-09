@@ -2,9 +2,7 @@
 Tool: screen_sanctions_pep
 
 Purpose: Checks an applicant's name and business name against real
-sanctions and PEP data via the OpenSanctions API (free for
-non-commercial use). Same output shape as the original mock version,
-so nothing downstream (harness, schemas) needs to change.
+sanctions and PEP data via the OpenSanctions API.
 """
 
 import os
