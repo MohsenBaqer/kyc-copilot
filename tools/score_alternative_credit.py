@@ -1,13 +1,7 @@
 """
 Tool: score_alternative_credit
 
-Purpose: Deterministic, rules-based alternative credit scoring —
-Hal's third pillar: "AI-driven alternative credit scoring,
-accelerating access to finance with fairness and speed." Uses bank
-transaction data instead of traditional credit bureau history.
-NO LLM — must be reproducible and explainable. Weights and band
-thresholds are read from data/risk_rubric_config.json so they're
-human-editable, same pattern as calculate_risk_score.
+Purpose: Deterministic, rules-based alternative credit scoring
 """
 
 import json
