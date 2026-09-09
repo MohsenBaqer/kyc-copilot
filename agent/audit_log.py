@@ -1,8 +1,6 @@
 """
 Audit logging: records every tool call and its result for a case,
-plus the final summary, to a JSON file in logs/. This is the trail
-a compliance reviewer or auditor would use to reconstruct exactly
-what happened and why for any given case.
+plus the final summary, to a JSON file in logs/. 
 """
 
 import json
