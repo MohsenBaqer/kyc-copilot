@@ -1,6 +1,5 @@
 """
-Agent harness: the orchestration loop that talks to Claude, executes
-tool calls, and feeds results back — until Claude gives a final answer.
+Agent harness.
 """
 
 import json
