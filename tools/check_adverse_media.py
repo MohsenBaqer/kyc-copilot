@@ -2,14 +2,9 @@
 Tool: check_adverse_media
 
 Purpose: Checks an applicant's name and business name against real
-news coverage via NewsAPI.org (free tier, local/dev use). Flags
-articles whose headline or description contains adverse-sounding
+news coverage via NewsAPI.org. 
+Flags articles whose headline or description contains adverse-sounding
 keywords, categorized by severity.
-
-Limitation, worth being explicit about: keyword matching is a
-simplification, not true classification — a real adverse media
-provider uses NLP/ML categorization aligned to FATF risk categories.
-This is a transparent, explainable stand-in for that.
 """
 
 import os
